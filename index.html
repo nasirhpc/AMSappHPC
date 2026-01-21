@@ -4,16 +4,27 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>হামদর্দ পাবলিক কলেজ | ফি ব্যবস্থাপনা</title>
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/kG8qf9rL/Hamdard-Public-College-Logo.png">
+  
   <style>
-    /* পুরো স্ক্রিন জুড়ে অ্যাপটি দেখানোর জন্য স্টাইল */
     body, html {
       margin: 0;
       padding: 0;
       height: 100%;
       width: 100%;
+      display: flex;
+      flex-direction: column;
       overflow: hidden;
       background-color: #f0f2f5;
+      font-family: Solaimanlipi,'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
+    
+    /* অ্যাপ কন্টেন্ট (Iframe) */
+    .app-container {
+      flex: 1; /* এটি বাকি সব জায়গা দখল করবে */
+      position: relative;
+    }
+    
     iframe {
       position: absolute;
       top: 0;
@@ -22,15 +33,40 @@
       height: 100%;
       border: none;
     }
+    
+    /* আধুনিক ফুটার স্টাইল */
+    .footer {
+      height: 30px;
+      background-color: #004d40; /* আপনার কলেজের থিম কালার */
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .footer span {
+      opacity: 0.9;
+    }
+    
+    .footer strong {
+      margin-left: 5px;
+      color: #ffc107; /* নাম হাইলাইট করার জন্য সোনালী রঙ */
+    }
   </style>
 </head>
 <body>
 
-  <iframe 
-    src="https://script.google.com/macros/s/AKfycby9pxeBMRwNSQP3EqZr3q3gaHtcMOEqcBFm2gZZOIWRn7fIIIxZRor26BIY29OFylh_iA/exec" 
-    allow="geolocation; microphone; camera; midi; vr; accelerometer; gyroscope; payment; ambient-light-sensor; encrypted-media; usb" 
-    allowfullscreen>
-  </iframe>
+  <div class="app-container">
+    <iframe src="https://script.google.com/macros/s/AKfycby9pxeBMRwNSQP3EqZr3q3gaHtcMOEqcBFm2gZZOIWRn7fIIIxZRor26BIY29OFylh_iA/exec"></iframe>
+  </div>
+
+  <footer class="footer">
+    <span>Developed by</span>
+    <strong>Takreem IT Solution</strong>
+  </footer>
 
 </body>
 </html>

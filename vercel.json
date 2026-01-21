@@ -1,9 +1,13 @@
-{
-  "version": 2,
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "https://script.google.com/macros/s/AKfycby9pxeBMRwNSQP3EqZr3q3gaHtcMOEqcBFm2gZZOIWRn7fIIIxZRor26BIY29OFylh_iA/exec"
-    }
-  ]
-}
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>HPC Fee Management</title>
+    <style>
+      body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; }
+      iframe { width: 100%; height: 100%; border: none; }
+    </style>
+  </head>
+  <body>
+    <iframe src="https://script.google.com/macros/s/AKfycby9pxeBMRwNSQP3EqZr3q3gaHtcMOEqcBFm2gZZOIWRn7fIIIxZRor26BIY29OFylh_iA/exec"></iframe>
+  </body>
+</html>

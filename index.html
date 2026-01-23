@@ -41,7 +41,7 @@
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
-    .loading-msg { font-size: 14px; color: rgba(255,255,255,0.6); letter-spacing: 1px; }
+    .loading-msg { font-size: 14px; color: rgba(255,255,255,0.6); letter-spacing: 1px; max-width: 80%; }
 
     /* অ্যাপ কন্টেন্ট */
     .app-container { flex: 1; position: relative; }
@@ -68,11 +68,11 @@
       </div>
     </div>
     <div class="spinner"></div>
-    <p class="loading-msg">"হামদর্দ পাবলিক কলেজ ডিজিটাল সিস্টেমে আপনাকে স্বাগতম, লোড হওয়া পর্যন্ত আমাদের সাথেই থাকুন..."</p>
+    <p class="loading-msg">"হামদর্দ পাবলিক কলেজ ডিজিটাল সিস্টেমে আপনাকে স্বাগতম, সার্ভারের সাথে সংযোগ স্থাপন করা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন..."</p>
   </div>
 
   <div class="app-container">
-    <iframe id="appFrame" src="https://script.google.com/macros/s/AKfycby9pxeBMRwNSQP3EqZr3q3gaHtcMOEqcBFm2gZZOIWRn7fIIIxZRor26BIY29OFylh_iA/exec" onload="hideLoader()"></iframe>
+    <iframe id="appFrame" src="https://script.google.com/macros/s/AKfycby9pxeBMRwNSQP3EqZr3q3gaHtcMOEqcBFm2gZZOIWRn7fIIIxZRor26BIY29OFylh_iA/exec"></iframe>
   </div>
 
   <footer class="footer">
@@ -81,14 +81,42 @@
   </footer>
 
   <script>
-    function hideLoader() {
-      const loader = document.getElementById('loader');
-      loader.style.transition = "opacity 0.8s ease";
-      loader.style.opacity = "0";
-      setTimeout(() => { loader.style.display = "none"; }, 800);
+    let iframeLoaded = false;
+    let minimumTimePassed = false;
+
+    // আইফ্রেম লোড হওয়ার ইভেন্ট লিসেনার
+    const iframe = document.getElementById('appFrame');
+    iframe.onload = function() {
+      iframeLoaded = true;
+      checkAndHideLoader();
+    };
+
+    // ৫ সেকেন্ডের টাইমার
+    setTimeout(() => {
+      minimumTimePassed = true;
+      checkAndHideLoader();
+    }, 5000);
+
+    function checkAndHideLoader() {
+      // যদি আইফ্রেম লোড হয় এবং ৫ সেকেন্ড পার হয়ে যায়, তবেই হাইড হবে
+      if (iframeLoaded && minimumTimePassed) {
+        const loader = document.getElementById('loader');
+        loader.style.transition = "opacity 0.8s ease";
+        loader.style.opacity = "0";
+        setTimeout(() => { 
+          loader.style.display = "none"; 
+        }, 800);
+      }
     }
-    // ব্যাকআপ: ২০ সেকেন্ডের মধ্যে লোড না হলে অটো হাইড
-    setTimeout(() => { if(document.getElementById('loader').style.display !== "none") hideLoader(); }, 20000);
+
+    // ব্যাকআপ: যদি কোনো কারণে আইফ্রেম লোড ইভেন্ট ফায়ার না করে, ৩০ সেকেন্ড পর অটো হাইড হবে
+    setTimeout(() => { 
+      if(document.getElementById('loader').style.display !== "none") {
+        minimumTimePassed = true;
+        iframeLoaded = true;
+        checkAndHideLoader();
+      }
+    }, 30000);
   </script>
 
 </body>

@@ -5,68 +5,91 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>হামদর্দ পাবলিক কলেজ | ফি ব্যবস্থাপনা</title>
   <link rel="icon" type="image/png" href="https://i.postimg.cc/kG8qf9rL/Hamdard-Public-College-Logo.png">
-  
   <style>
     body, html {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
+      margin: 0; padding: 0; height: 100%; width: 100%;
+      display: flex; flex-direction: column; overflow: hidden;
       background-color: #f0f2f5;
-      font-family: Solaimanlipi,Times New Roman, Tahoma, Geneva, Verdana, sans-serif;
+      font-family: 'SolaimanLipi', Arial, sans-serif;
     }
     
-    /* অ্যাপ কন্টেন্ট (Iframe) */
-    .app-container {
-      flex: 1; /* এটি বাকি সব জায়গা দখল করবে */
-      position: relative;
+    /* লোডিং স্ক্রিন */
+    #loader {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle, #004d40 0%, #002d26 100%);
+      display: flex; flex-direction: column; justify-content: center;
+      align-items: center; z-index: 9999; color: white; text-align: center; padding: 30px;
     }
-    
-    iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: none;
+
+    .quote-container { max-width: 700px; margin-bottom: 40px; }
+    .quote-text {
+      font-size: 24px; font-style: italic; margin-bottom: 20px;
+      line-height: 1.6; color: #ffc107; font-weight: 500;
     }
+
+    .author-info {
+      font-size: 17px; line-height: 1.5;
+      border-top: 1px solid rgba(255,255,255,0.2); padding-top: 15px;
+    }
+
+    .author-name { font-size: 20px; font-weight: bold; color: #fff; display: block; margin-bottom: 5px; }
+
+    .spinner {
+      width: 45px; height: 45px; border: 4px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%; border-top-color: #ffc107;
+      animation: spin 1s linear infinite; margin-bottom: 15px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .loading-msg { font-size: 14px; color: rgba(255,255,255,0.6); letter-spacing: 1px; }
+
+    /* অ্যাপ কন্টেন্ট */
+    .app-container { flex: 1; position: relative; }
+    iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
     
-    /* আধুনিক ফুটার স্টাইল */
+    /* ফুটার */
     .footer {
-      height: 30px;
-      background-color: #004d40; /* আপনার কলেজের থিম কালার */
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 12px;
-      letter-spacing: 0.5px;
-      box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+      height: 35px; background-color: #00332c; color: white;
+      display: flex; justify-content: center; align-items: center;
+      font-size: 13px; box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
     }
-    
-    .footer span {
-      opacity: 0.9;
-    }
-    
-    .footer strong {
-      margin-left: 5px;
-      color: #ffc107; /* নাম হাইলাইট করার জন্য সোনালী রঙ */
-    }
+    .footer strong { margin-left: 6px; color: #ffc107; }
   </style>
 </head>
 <body>
 
+  <div id="loader">
+    <div class="quote-container">
+      <p class="quote-text">"কাজ কখনো মানুষকে খালি হাতে ফেরায় না।"</p>
+      <div class="author-info">
+        <span class="author-name">ড. হাকীম মো. ইউছুফ হারুন ভূঁইয়া</span>
+        প্রতিষ্ঠাতা, হামদর্দ পাবলিক কলেজ <br>
+        ব্যবস্থাপনা পরিচালক ও চিফ মোতাওয়াল্লী, হামদর্দ ল্যাবরেটরীজ (ওয়াক্ফ) বাংলাদেশ
+      </div>
+    </div>
+    <div class="spinner"></div>
+    <p class="loading-msg">"হামদর্দ পাবলিক কলেজ ডিজিটাল সিস্টেমে আপনাকে স্বাগতম, লোড হওয়া পর্যন্ত আমাদের সাথেই থাকুন..."</p>
+  </div>
+
   <div class="app-container">
-    <iframe src="https://script.google.com/macros/s/AKfycby9pxeBMRwNSQP3EqZr3q3gaHtcMOEqcBFm2gZZOIWRn7fIIIxZRor26BIY29OFylh_iA/exec"></iframe>
+    <iframe id="appFrame" src="https://script.google.com/macros/s/AKfycby9pxeBMRwNSQP3EqZr3q3gaHtcMOEqcBFm2gZZOIWRn7fIIIxZRor26BIY29OFylh_iA/exec" onload="hideLoader()"></iframe>
   </div>
 
   <footer class="footer">
     <span>Developed by</span>
     <strong>Takreem IT Solution</strong>
   </footer>
+
+  <script>
+    function hideLoader() {
+      const loader = document.getElementById('loader');
+      loader.style.transition = "opacity 0.8s ease";
+      loader.style.opacity = "0";
+      setTimeout(() => { loader.style.display = "none"; }, 800);
+    }
+    // ব্যাকআপ: ২০ সেকেন্ডের মধ্যে লোড না হলে অটো হাইড
+    setTimeout(() => { if(document.getElementById('loader').style.display !== "none") hideLoader(); }, 20000);
+  </script>
 
 </body>
 </html>

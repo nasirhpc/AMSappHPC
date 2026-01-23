@@ -5,7 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>হামদর্দ পাবলিক কলেজ | ফি ব্যবস্থাপনা</title>
   <link rel="icon" type="image/png" href="https://i.postimg.cc/kG8qf9rL/Hamdard-Public-College-Logo.png">
+  
   <style>
+    /* বেসিক রিসেট এবং বডি সেটআপ */
     body, html {
       margin: 0; padding: 0; height: 100%; width: 100%;
       display: flex; flex-direction: column; overflow: hidden;
@@ -13,27 +15,29 @@
       font-family: 'SolaimanLipi', Arial, sans-serif;
     }
     
-    /* লোডিং স্ক্রিন */
+    /* লোডিং স্ক্রিন: এটি পুরো পেজ জুড়ে থাকবে */
     #loader {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: radial-gradient(circle, #004d40 0%, #002d26 100%);
       display: flex; 
       flex-direction: column; 
-      justify-content: center; /* এটি কন্টেন্টকে একদম মাঝখানে রাখবে */
-      align-items: center; 
+      justify-content: center; /* কন্টেন্টকে উলম্বভাবে (Vertical) মাঝখানে রাখবে */
+      align-items: center;     /* কন্টেন্টকে অনুভূমিকভাবে (Horizontal) মাঝখানে রাখবে */
       z-index: 9999; 
       color: white; 
       text-align: center; 
-      padding: 20px; /* মোবাইলের জন্য প্যাডিং কমানো হয়েছে */
+      padding: 20px;           /* মোবাইল স্ক্রিনে দুই পাশে গ্যাপ রাখবে */
     }
 
+    /* উক্তির বক্স: মোবাইলে এটি স্ক্রিনের ৯০% জায়গা দখল করবে */
     .quote-container { 
-      max-width: 90%; /* মোবাইলে দুই পাশে জায়গা রাখার জন্য */
+      max-width: 90%; 
       margin-bottom: 30px; 
     }
 
+    /* উক্তির টেক্সট স্টাইল */
     .quote-text {
-      font-size: 22px; /* মোবাইলের জন্য সামান্য ছোট করা হয়েছে */
+      font-size: 22px; 
       font-style: italic; 
       margin-bottom: 20px;
       line-height: 1.5; 
@@ -41,13 +45,14 @@
       font-weight: 500;
     }
 
-    /* বড় স্ক্রিনের জন্য ফন্ট সাইজ বাড়ানো */
+    /* রেসপন্সিভ ডিজাইন: বড় স্ক্রিনের জন্য সাইজ অটো অ্যাডজাস্ট হবে */
     @media (min-width: 768px) {
       .quote-text { font-size: 28px; }
       .author-name { font-size: 22px; }
       .quote-container { max-width: 700px; }
     }
 
+    /* লেখকের তথ্যের বর্ডার এবং স্পেসিং */
     .author-info {
       font-size: 15px; 
       line-height: 1.6;
@@ -63,6 +68,7 @@
       margin-bottom: 5px; 
     }
 
+    /* স্পিনার অ্যানিমেশন */
     .spinner {
       width: 40px; height: 40px; 
       border: 4px solid rgba(255, 255, 255, 0.1);
@@ -71,6 +77,8 @@
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* লোডিং মেসেজ স্টাইল */
     .loading-msg { 
       font-size: 13px; 
       color: rgba(255,255,255,0.7); 
@@ -79,9 +87,11 @@
       line-height: 1.4;
     }
 
+    /* আইফ্রেম কন্টেইনার সেটআপ */
     .app-container { flex: 1; position: relative; }
     iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
     
+    /* ফুটরের ডিজাইন */
     .footer {
       height: 35px; background-color: #00332c; color: white;
       display: flex; justify-content: center; align-items: center;
@@ -101,8 +111,12 @@
         <span style="font-size: 0.9em; opacity: 0.8;">ব্যবস্থাপনা পরিচালক ও চিফ মোতাওয়াল্লী, হামদর্দ ল্যাবরেটরীজ (ওয়াক্ফ) বাংলাদেশ</span>
       </div>
     </div>
+    
     <div class="spinner"></div>
-    <p class="loading-msg">হামদর্দ পাবলিক কলেজ ডিজিটাল সিস্টেমে আপনাকে স্বাগতম। <br> সার্ভারের সাথে সংযোগ স্থাপন করা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...</p>
+    <p class="loading-msg">
+      হামদর্দ পাবলিক কলেজ ডিজিটাল সিস্টেমে আপনাকে স্বাগতম। <br> 
+      সার্ভারের সাথে সংযোগ স্থাপন করা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...
+    </p>
   </div>
 
   <div class="app-container">
@@ -118,18 +132,22 @@
     let iframeLoaded = false;
     let minimumTimePassed = false;
 
+    // আইফ্রেম লোড হওয়ার ইভেন্ট লিসেনার
     const iframe = document.getElementById('appFrame');
     iframe.onload = function() {
       iframeLoaded = true;
       checkAndHideLoader();
     };
 
+    // ৯ সেকেন্ডের টাইমার সেটআপ (মিনিমাম ৯ সেকেন্ড পেজটি দেখাবে)
     setTimeout(() => {
       minimumTimePassed = true;
       checkAndHideLoader();
-    }, 5000);
+    }, 9000);
 
+    // লোডার লুকানোর ফাংশন
     function checkAndHideLoader() {
+      // যদি আইফ্রেম লোড হয় এবং ৯ সেকেন্ড পার হয়ে যায়, তবেই লোডার সরবে
       if (iframeLoaded && minimumTimePassed) {
         const loader = document.getElementById('loader');
         loader.style.transition = "opacity 0.8s ease";
@@ -138,13 +156,14 @@
       }
     }
 
+    // ব্যাকআপ: যদি ৩৫ সেকেন্ডের মধ্যে আইফ্রেম রেসপন্স না করে, তবে অটো লোডার সরিয়ে দেওয়া হবে
     setTimeout(() => { 
       if(document.getElementById('loader').style.display !== "none") {
         minimumTimePassed = true;
         iframeLoaded = true;
         checkAndHideLoader();
       }
-    }, 30000);
+    }, 35000);
   </script>
 </body>
 </html>
